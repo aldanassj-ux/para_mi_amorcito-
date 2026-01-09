@@ -9,7 +9,7 @@
             margin: 0;
             padding: 20px;
             background: linear-gradient(180deg, #ffe6ee 0%, #ffc1d3 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Georgia', serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -36,7 +36,7 @@
             padding: 15px 15px 45px 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transform: rotate(-2deg);
-            margin: 20px 0;
+            margin: 10px 0;
             border-radius: 2px;
         }
 
@@ -49,12 +49,21 @@
 
         #contenido {
             text-align: center;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             padding: 25px;
             border-radius: 25px;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             max-width: 90%;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-top: 15px;
+        }
+
+        .mensaje-personal {
+            color: #5d001e;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            white-space: pre-line; /* Mantiene los saltos de línea */
         }
 
         .botones {
@@ -77,7 +86,7 @@
             z-index: 10;
         }
 
-        #si { background: #ff4d6d; color: white; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
+        #si { background: #ff4d6d; color: white; }
         #no { background: #888; color: white; position: absolute; transition: 0.15s ease; }
 
         .corazon-flotante {
@@ -86,7 +95,6 @@
             font-size: 24px;
             animation: subir 4s linear forwards;
             z-index: 1;
-            user-select: none;
         }
 
         @keyframes subir {
@@ -103,13 +111,64 @@
     </div>
 
     <div id="contenido">
-        <p style="color: #5d001e; font-size: 1.1rem; line-height: 1.5;">
-            No hay día en el que no agradezca por haberte cruzado. <br>
-            <strong>Te amo mucho amorcito ❤️</strong>
-        </p>
+        <div class="mensaje-personal">
+            Todo lo que vivimos, cada pelea, cada reconciliación, cada risa, cada abrazo… todo nos hizo más fuertes.
+            
+            Vos sos mi lugar seguro, mi persona favorita y la razón por la que quiero ser mejor.
+            
+            Gracias por quedarte, por elegirme, y por hacerme sentir amada de verdad.
+            
+            Te prometo seguir cuidando lo nuestro, seguir eligiéndote y seguir creciendo juntas.
+            
+            <strong>Te amo con todo mi corazón. ❤️</strong>
+        </div>
         
-        <h2 id="preguntaTexto" style="color: #c70039; margin-top: 20px;">¿Me dejas seguir haciéndote feliz?</h2>
+        <h2 id="preguntaTexto" style="color: #c70039; margin-top: 25px;">¿Me dejas seguir haciéndote feliz?</h2>
 
         <div class="botones" id="areaBotones">
             <button class="opcion" id="si">¡SÍ! 😍</button>
             <button class="opcion" id="no">No 😢</button>
+        </div>
+    </div>
+
+    <audio id="musica" loop>
+        <source src="https://files.catbox.moe/7quj8p.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        const audio = document.getElementById('musica');
+        const btnMusica = document.getElementById('btnMusica');
+        const btnSi = document.getElementById('si');
+        const btnNo = document.getElementById('no');
+        const contenido = document.getElementById('contenido');
+
+        btnMusica.onclick = () => {
+            audio.play().catch(e => console.log("Audio bloqueado"));
+            btnMusica.style.display = 'none';
+        };
+
+        btnSi.onclick = () => {
+            contenido.innerHTML = `
+                <h1 style="color: #c70039; font-size: 2rem;">💖 ¡SÍII! 💖</h1>
+                <p style="font-size: 1.2rem; color: #5d001e;">¡Me hacés la persona más feliz del universo!</p>
+                <p style="font-size: 1.1rem;">Prometo amarte y cuidarte cada segundo. 💍✨</p>
+            `;
+            setInterval(crearCorazon, 100);
+        };
+
+        function escapar(e) {
+            e.preventDefault();
+            const margen = 50;
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - margen);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - margen);
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = Math.max(0, x) + 'px';
+            btnNo.style.top = Math.max(0, y) + 'px';
+        }
+
+        btnNo.ontouchstart = escapar;
+        btnNo.onmouseover = escapar;
+
+        function crearCorazon() {
+            const h = document.createElement("div");
+            const emojis = ["❤️
