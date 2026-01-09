@@ -9,7 +9,7 @@
             margin: 0;
             padding: 20px;
             background: linear-gradient(180deg, #ffe6ee 0%, #ffc1d3 100%);
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -17,7 +17,6 @@
             overflow-x: hidden;
         }
 
-        /* Botón música */
         #btnMusica {
             padding: 15px 25px;
             background: #c70039;
@@ -28,54 +27,58 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             z-index: 1000;
             margin-bottom: 20px;
+            cursor: pointer;
         }
 
-        /* Foto Polaroid */
         .polaroid {
-            width: 250px;
+            width: 280px;
             background: white;
-            padding: 15px 15px 40px 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            transform: rotate(-3deg);
+            padding: 15px 15px 45px 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: rotate(-2deg);
             margin: 20px 0;
+            border-radius: 2px;
         }
 
         .polaroid img {
             width: 100%;
+            height: auto;
             display: block;
             border: 1px solid #f0f0f0;
         }
 
-        /* Contenedor principal */
         #contenido {
             text-align: center;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.7);
+            padding: 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(8px);
             max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .botones {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 25px;
             position: relative;
-            height: 60px;
+            height: 80px;
+            width: 100%;
         }
 
         button.opcion {
-            padding: 12px 30px;
+            padding: 12px 35px;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            z-index: 10;
         }
 
-        #si { background: #ff4d6d; color: white; }
-        #no { background: #888; color: white; position: absolute; transition: 0.1s; }
+        #si { background: #ff4d6d; color: white; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
+        #no { background: #888; color: white; position: absolute; transition: 0.15s ease; }
 
         .corazon-flotante {
             position: fixed;
@@ -83,90 +86,30 @@
             font-size: 24px;
             animation: subir 4s linear forwards;
             z-index: 1;
+            user-select: none;
         }
 
         @keyframes subir {
-            to { transform: translateY(-110vh); opacity: 0; }
+            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <button id="btnMusica">🎵 ACTIVAR MÚSICA Y AMOR 🎵</button>
+    <button id="btnMusica">🎵 TOCÁ PARA EMPEZAR 🎵</button>
 
     <div class="polaroid">
-        <img src="https://files.catbox.moe/1yzyla.jpg" alt="Foto">
+        <img src="https://i.ibb.co/99sT8hJW/IMG-20250902-WA0048.jpg" alt="Nuestra Foto">
     </div>
 
     <div id="contenido">
-        <p style="color: #5d001e; font-size: 1.1rem;">
+        <p style="color: #5d001e; font-size: 1.1rem; line-height: 1.5;">
             No hay día en el que no agradezca por haberte cruzado. <br>
             <strong>Te amo mucho amorcito ❤️</strong>
         </p>
         
-        <h2 id="preguntaTexto" style="color: #c70039;">¿Me dejas seguir haciéndote feliz?</h2>
+        <h2 id="preguntaTexto" style="color: #c70039; margin-top: 20px;">¿Me dejas seguir haciéndote feliz?</h2>
 
         <div class="botones" id="areaBotones">
             <button class="opcion" id="si">¡SÍ! 😍</button>
             <button class="opcion" id="no">No 😢</button>
-        </div>
-    </div>
-
-    <audio id="musica" loop>
-        <source src="https://files.catbox.moe/7quj8p.mp3" type="audio/mp3">
-    </audio>
-
-    <script>
-        const audio = document.getElementById('musica');
-        const btnMusica = document.getElementById('btnMusica');
-        const btnSi = document.getElementById('si');
-        const btnNo = document.getElementById('no');
-        const contenido = document.getElementById('contenido');
-
-        // Función para la música
-        btnMusica.onclick = () => {
-            audio.play();
-            btnMusica.style.display = 'none';
-        };
-
-        // Función para el botón SI (Corregido para celular)
-        btnSi.onclick = () => {
-            contenido.innerHTML = `
-                <h1 style="color: #c70039; animation: aparecer 1s">
-                    ¡PROMETO HACERTE FELIZ SIEMPRE! 💖💍
-                </h1>
-                <p>Eres lo mejor de mi vida.</p>
-            `;
-            // Lluvia de corazones masiva
-            setInterval(crearCorazon, 150);
-        };
-
-        // Función para que el NO escape (Corregido para táctil)
-        function moverNo(e) {
-            e.preventDefault(); // Evita que se haga clic accidental
-            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
-            btnNo.style.left = x + 'px';
-            btnNo.style.top = y + 'px';
-            btnNo.style.position = 'fixed';
-        }
-
-        btnNo.ontouchstart = moverNo;
-        btnNo.onmouseover = moverNo;
-
-        // Sistema de corazones
-        function crearCorazon() {
-            const h = document.createElement("div");
-            h.className = "corazon-flotante";
-            h.innerHTML = "❤️";
-            h.style.left = Math.random() * 100 + "vw";
-            h.style.fontSize = (Math.random() * 20 + 20) + "px";
-            h.style.animationDuration = (Math.random() * 2 + 3) + "s";
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 4000);
-        }
-
-        setInterval(crearCorazon, 500);
-    </script>
-</body>
-</html>
