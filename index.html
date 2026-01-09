@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para vos, mi amor 💖</title>
+<style>
+    body {
+        margin: 0;
+        overflow-x: hidden;
+        background: linear-gradient(180deg, #ffe6ee 0%, #ffc1d3 100%);
+        font-family: 'Palatino', 'Georgia', serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    /* Botón inicial */
+    #btnMusica {
+        padding: 12px 25px;
+        background: #c70039;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        z-index: 100;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Polaroid */
+    .polaroid {
+        width: 260px;
+        padding: 15px 15px 40px 15px;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        position: relative;
+        animation: balanceo 3s ease-in-out infinite alternate;
+        z-index: 10;
+    }
+
+    .polaroid img {
+        width: 100%;
+        height: auto;
+        border: 1px solid #eee;
+    }
+
+    @keyframes balanceo {
+        0% { transform: rotate(-4deg); }
+        100% { transform: rotate(4deg); }
+    }
+
+    .cuerda {
+        width: 2px;
+        height: 60px;
+        background: #555;
+        margin-top: -20px;
+    }
+
+    /* Mensaje */
+    .mensaje {
+        margin-top: 30px;
+        font-size: 1.1rem;
+        color: #5d001e;
+        line-height: 1.6;
+        max-width: 450px;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 20px;
+        backdrop-filter: blur(5px);
+        text-align: center;
+    }
+
+    /* Sección de pregunta */
+    .pregunta-container {
+        margin-top: 40px;
+        padding: 20px;
+        z-index: 20;
+    }
+
+    .botones-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+        height: 50px;
+    }
+
+    .btn-preg {
+        padding: 10px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    #si { background-color: #ff4d6d; color: white; font-weight: bold; }
+    #no { background-color: #888; color: white; position: relative; }
+
+    /* Corazones */
+    .heart {
+        position: fixed;
+        bottom: -10%;
+        font-size: 24px;
+        user-select: none;
+        z-index: 1;
+        animation: flotar linear forwards;
+    }
+
+    @keyframes flotar {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+
+<button id="btnMusica">🎵 Haz clic para empezar 🎵</button>
+
+<div class="cuerda"></div>
+<div class="polaroid">
+    <img src="https://files.catbox.moe/1yzyla.jpg" alt="Nuestro recuerdo">
+</div>
+
+<div class="mensaje">
+    No hay día en el que no agradezca por haberte cruzado. <br>
+    Todo lo que vivimos nos hizo más fuertes. <br><br>
+    Vos sos mi lugar seguro y mi persona favorita. <br>
+    <strong>Te amo mucho amorcito ❤️</strong>
+</div>
+
+<div class="pregunta-container" id="contenedorPregunta">
+    <h2 style="color: #c70039;">¿Me dejas seguir haciéndote feliz?</h2>
+    <div class="botones-container">
+        <button class="btn-preg" id="si">¡SÍ! 😍</button>
+        <button class="btn-preg" id="no">No 😢</button>
+    </div>
+</div>
+
+<audio id="miAudio" loop>
+    <source src="https://files.catbox.moe/7quj8p.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const audio = document.getElementById("miAudio");
+const btnMusica = document.getElementById("btnMusica");
+const btnSi = document.getElementById("si");
+const btnNo = document.getElementById("no");
+const contenedor = document.getElementById("contenedorPregunta");
+
+// Iniciar música
+btnMusica.addEventListener("click", () => {
+    audio.play();
+    btnMusica.style.display = "none";
+});
+
+// Lógica botón SI
+btnSi.addEventListener("click", () => {
+    contenedor.innerHTML = "<h1 style='color: #c70039; animation: aparecer 1s;'>¡PROMETO HACERTE LA PERSONA MÁS FELIZ DEL MUNDO! 💖👑</h1>";
+    // Lanzar muchos corazones extra
+    for(let i=0; i<50; i++) {
+        setTimeout(crearCorazon, i * 100);
+    }
+});
+
+// Lógica botón NO (Escapa del mouse)
+btnNo.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
+    const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
+    btnNo.style.position = "absolute";
+    btnNo.style.left = x + "px";
+    btnNo.style.top = y + "px";
+});
+
+// Lógica de corazones flotantes
+function crearCorazon() {
+    const corazon = document.createElement("div");
+    const iconos = ["❤️", "💖", "💕", "💘"];
+    corazon.classList.add("heart");
+    corazon.innerHTML = iconos[Math.floor(Math.random() * iconos.length)];
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize =
+
